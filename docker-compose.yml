@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  django-uwsgi:
+    build: .
+
+  nginx:
+    build: nginx
+    ports:
+      - "8888:8888"

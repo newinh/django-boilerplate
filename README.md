@@ -2,4 +2,4 @@
 
 * pipenv
 * django-environ
-* uwsgi
+* uwsgi, nginx, docker
