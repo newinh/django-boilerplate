@@ -2,3 +2,4 @@
 
 * pipenv
 * django-environ
+* uwsgi

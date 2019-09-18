@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 django = "*"
 django-environ = "*"
+uwsgi = "*"
 
 [requires]
 python_version = "3.7"
