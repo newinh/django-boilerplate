@@ -2,4 +2,3 @@
 
 * pipenv
 * django-environ
-f

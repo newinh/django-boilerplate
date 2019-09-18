@@ -12,18 +12,30 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+import environ
 
+root = environ.Path(__file__) - 2
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = root()
+
+env = environ.Env(
+    # set casting, default value
+    SECRET_KEY=(str, '!SECRET!'),
+    DEBUG=(bool, True),
+    DATABASE_URL=(str, f"sqlite:////{root.path('db.sqlite3')}")
+)
+
+# reading .env file
+environ.Env.read_env(env.path('ENV_PATH', default=root.path('.env')())())
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fl02d9$co_s7x$yr30^pb(fkw725@=c8lfq+ir^rm8as&26ub%'
+SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -74,10 +86,7 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': env.db('DATABASE_URL')
 }
 
 
